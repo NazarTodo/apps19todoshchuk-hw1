@@ -22,7 +22,8 @@ public class TemperatureSeriesAnalysis {
 
 
     public void setTemperatureSeries(double[] temperatureSeries) {
-        this.temperatureSeries = Arrays.copyOf(temperatureSeries, temperatureSeries.length);
+        this.temperatureSeries =
+                Arrays.copyOf(temperatureSeries, temperatureSeries.length);
     }
 
     public void checkEmptyAndNormal() {
@@ -88,7 +89,7 @@ public class TemperatureSeriesAnalysis {
             if (Math.abs(temperatureSeries[i]) < Math.abs(closest)) {
                 closest = temperatureSeries[i];
             } else if (Math.abs(temperatureSeries[i]) - Math.abs(closest)
-                    < 0.000001 && temperatureSeries[i] > closest) {
+                    < Double.MIN_VALUE && temperatureSeries[i] > closest) {
 
                 closest = temperatureSeries[i];
 
@@ -108,7 +109,8 @@ public class TemperatureSeriesAnalysis {
             if (newDiff < diff) {
                 diff = newDiff;
                 closest = temperatureSeries[i];
-            } else if (Math.abs(newDiff - diff) < 0.0001 && temperatureSeries[i] > closest) {
+            } else if (Math.abs(newDiff - diff) < Double.MIN_VALUE
+                    && temperatureSeries[i] > closest) {
 
                 closest = temperatureSeries[i];
 
