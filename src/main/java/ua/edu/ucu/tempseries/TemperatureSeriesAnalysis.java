@@ -17,12 +17,12 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double[] getTemperatureSeries() {
-        return temperatureSeries;
+        return Arrays.copyOf(temperatureSeries, temperatureSeries.length);
     }
 
 
     public void setTemperatureSeries(double[] temperatureSeries) {
-        this.temperatureSeries = temperatureSeries;
+        this.temperatureSeries = Arrays.copyOf(temperatureSeries, temperatureSeries.length);
     }
 
     public void checkEmptyAndNormal() {
@@ -87,10 +87,11 @@ public class TemperatureSeriesAnalysis {
         for (int i = 0; i < temperatureSeries.length; i++) {
             if (Math.abs(temperatureSeries[i]) < Math.abs(closest)) {
                 closest = temperatureSeries[i];
-            } else if (Math.abs(temperatureSeries[i]) == Math.abs(closest)) {
-                if (temperatureSeries[i] > closest) {
-                    closest = temperatureSeries[i];
-                }
+            } else if (Math.abs(temperatureSeries[i]) - Math.abs(closest)
+                    < 0.000001 && temperatureSeries[i] > closest) {
+
+                closest = temperatureSeries[i];
+
             }
         }
 
@@ -107,10 +108,10 @@ public class TemperatureSeriesAnalysis {
             if (newDiff < diff) {
                 diff = newDiff;
                 closest = temperatureSeries[i];
-            } else if (newDiff == diff) {
-                if (temperatureSeries[i] > closest) {
-                    closest = temperatureSeries[i];
-                }
+            } else if (Math.abs(newDiff - diff) < 0.0001 && temperatureSeries[i] > closest) {
+
+                closest = temperatureSeries[i];
+
             }
         }
         return closest;
@@ -156,13 +157,15 @@ public class TemperatureSeriesAnalysis {
     public int addTemps(double... temps) {
         checkEmptyAndNormal();
         int count = 0;
-        double[] newLst = new double[temperatureSeries.length * 2];
-        for (int i = 0; i < temperatureSeries.length; i++) {
-            newLst[i] = temperatureSeries[i];
+        int old = temperatureSeries.length;
+        double[] oldLst = Arrays.copyOf(temperatureSeries, old);
+        temperatureSeries = new double[temperatureSeries.length * 2];
+        for (int i = 0; i < old; i++) {
+            temperatureSeries[i] = oldLst[i];
             count += 1;
         }
         for (int j = 0; j < temps.length; j++) {
-            newLst[temperatureSeries.length + j + 1] = temps[j];
+            temperatureSeries[old + j + 1] = temps[j];
             count += 1;
         }
         return count;
