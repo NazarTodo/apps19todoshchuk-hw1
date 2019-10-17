@@ -18,6 +18,14 @@ public class TemperatureSeriesAnalysisTest {
     }
 
     @Test
+    public void testGetter() {
+        double[] temperatureSeries = {-1.0};
+        TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
+        double[] lst = seriesAnalysis.getTemperatureSeries();
+        assertArrayEquals(temperatureSeries, lst, 0.0001);
+    }
+
+    @Test
     public void testAverageWithOneElementArray() {
         // setup input data and expected result
         double[] temperatureSeries = {-1.0};
@@ -49,8 +57,8 @@ public class TemperatureSeriesAnalysisTest {
         double expResult = 1.0;
 
         double actualResult = seriesAnalysis.average();
-        
-        assertEquals(expResult, actualResult, 0.00001);        
+
+        assertEquals(expResult, actualResult, 0.00001);
     }
 
     @Test
@@ -144,8 +152,9 @@ public class TemperatureSeriesAnalysisTest {
         int count = arr1.addTemps(1.0, 38.1, -3);
         assertEquals(exp, count);
     }
+
     @Test
-    public void testTheSameClosestNumbers(){
+    public void testTheSameClosestNumbers() {
         double[] temperatureSeries = {-2.0, 3.0, 132.3, 21.5, 22.0, 2.0, -65.0, 8.2, -21.5};
         TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
         double closest_to_zero_exp = 2.0;
@@ -155,8 +164,9 @@ public class TemperatureSeriesAnalysisTest {
         double real_closest2value = seriesAnalysis.findTempClosestToValue(0);
         assertEquals(closest_to_value_exp, real_closest2value, 0.0001);
     }
+
     @Test
-    public void testEmptySetter(){
+    public void testEmptySetter() {
         TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis();
     }
 }
